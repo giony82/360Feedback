@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Feedback.WebAPI.Models;
+namespace Feedback.Core.Models;
 
 public class GoogleLoginRequest
 {
     [JsonPropertyName("token")]
-    public string Credential
+    public string Token
     {
         get; set;
     }

@@ -1,6 +1,6 @@
-using Feedback.WebAPI.Models;
+namespace Feedback.Core.Interfaces;
 
 public interface IGoogleAuthService
 {
-    Task<User> AuthenticateAsync(string credential);
+    Task<GoogleAuthPayload> AuthenticateAsync(string credential);
 }

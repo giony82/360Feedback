@@ -20,3 +20,5 @@ C:\github\360-feedback-app\src\api\Feedback.Core\obj\Debug\net8.0\Feedback.Core.
 C:\github\360-feedback-app\src\api\Feedback.Core\obj\Debug\net8.0\refint\Feedback.Core.dll
 C:\github\360-feedback-app\src\api\Feedback.Core\obj\Debug\net8.0\Feedback.Core.pdb
 C:\github\360-feedback-app\src\api\Feedback.Core\obj\Debug\net8.0\ref\Feedback.Core.dll
+C:\github\360-feedback-app\src\api\Feedback.Core\obj\Debug\net8.0\Feedback.Core.csproj.AssemblyReference.cache
+C:\github\360-feedback-app\src\api\Feedback.Core\obj\Debug\net8.0\Feedback.Core.sourcelink.json

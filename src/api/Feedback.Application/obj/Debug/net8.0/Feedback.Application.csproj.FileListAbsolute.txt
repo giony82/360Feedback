@@ -1,0 +1,16 @@
+C:\github\360-feedback-app\src\api\Feedback.Application\bin\Debug\net8.0\Feedback.Application.deps.json
+C:\github\360-feedback-app\src\api\Feedback.Application\bin\Debug\net8.0\Feedback.Application.dll
+C:\github\360-feedback-app\src\api\Feedback.Application\bin\Debug\net8.0\Feedback.Application.pdb
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\Feedback.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\Feedback.Application.AssemblyInfoInputs.cache
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\Feedback.Application.AssemblyInfo.cs
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\Feedback.Application.csproj.CoreCompileInputs.cache
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\Feedback.Application.sourcelink.json
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\Feedback.Application.dll
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\refint\Feedback.Application.dll
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\Feedback.Application.pdb
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\ref\Feedback.Application.dll
+C:\github\360-feedback-app\src\api\Feedback.Application\bin\Debug\net8.0\Feedback.Core.dll
+C:\github\360-feedback-app\src\api\Feedback.Application\bin\Debug\net8.0\Feedback.Core.pdb
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\Feedback.Application.csproj.AssemblyReference.cache
+C:\github\360-feedback-app\src\api\Feedback.Application\obj\Debug\net8.0\Feedback.590B4A95.Up2Date

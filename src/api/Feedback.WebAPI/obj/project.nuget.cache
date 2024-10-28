@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "FVC0FJYaICE=",
+  "dgSpecHash": "zPPYM9/RYAI=",
   "success": true,
   "projectFilePath": "C:\\github\\360-feedback-app\\src\\api\\Feedback.WebAPI\\Feedback.WebAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\zamfi\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\zamfi\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\zamfi\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\zamfi\\.nuget\\packages\\google.apis\\1.68.0\\google.apis.1.68.0.nupkg.sha512",

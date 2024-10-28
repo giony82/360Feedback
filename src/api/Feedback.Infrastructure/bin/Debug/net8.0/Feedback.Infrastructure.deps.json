@@ -8,6 +8,8 @@
     ".NETCoreApp,Version=v8.0": {
       "Feedback.Infrastructure/1.0.0": {
         "dependencies": {
+          "AutoMapper": "13.0.1",
+          "Feedback.Application": "1.0.0",
           "Feedback.Core": "1.0.0",
           "Google.Apis.Auth": "1.68.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.10",
@@ -15,6 +17,17 @@
         },
         "runtime": {
           "Feedback.Infrastructure.dll": {}
+        }
+      },
+      "AutoMapper/13.0.1": {
+        "dependencies": {
+          "Microsoft.Extensions.Options": "8.0.2"
+        },
+        "runtime": {
+          "lib/net6.0/AutoMapper.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.1.0"
+          }
         }
       },
       "Azure.Core/1.35.0": {
@@ -621,7 +634,24 @@
           }
         }
       },
+      "Feedback.Application/1.0.0": {
+        "dependencies": {
+          "AutoMapper": "13.0.1",
+          "Feedback.Core": "1.0.0"
+        },
+        "runtime": {
+          "Feedback.Application.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Feedback.Core/1.0.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.JsonWebTokens": "8.1.2",
+          "Microsoft.IdentityModel.Tokens": "8.1.2",
+          "System.IdentityModel.Tokens.Jwt": "8.1.2"
+        },
         "runtime": {
           "Feedback.Core.dll": {
             "assemblyVersion": "1.0.0",
@@ -636,6 +666,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AutoMapper/13.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/Fx1SbJ16qS7dU4i604Sle+U9VLX+WSNVJggk6MupKVkYvvBm4XqYaeFuf67diHefHKHs50uQIS2YEDFhPCakQ==",
+      "path": "automapper/13.0.1",
+      "hashPath": "automapper.13.0.1.nupkg.sha512"
     },
     "Azure.Core/1.35.0": {
       "type": "package",
@@ -1035,6 +1072,11 @@
       "sha512": "sha512-IXoJOXIqc39AIe+CIR7koBtRGMiCt/LPM3lI+PELtDIy9XdyeSrwXFdWV9dzJ2Awl0paLWUaknLxFQ5HpHZUog==",
       "path": "system.windows.extensions/6.0.0",
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
+    },
+    "Feedback.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Feedback.Core/1.0.0": {
       "type": "project",

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Feedback.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Feedback.Infrastructure;
 

@@ -2,6 +2,22 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "AutoMapper/13.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Options": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/AutoMapper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/AutoMapper.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Azure.Core/1.35.0": {
         "type": "package",
         "dependencies": {
@@ -1052,9 +1068,28 @@
           }
         }
       },
+      "Feedback.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "AutoMapper": "13.0.1",
+          "Feedback.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Feedback.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Feedback.Application.dll": {}
+        }
+      },
       "Feedback.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.IdentityModel.JsonWebTokens": "8.1.2",
+          "Microsoft.IdentityModel.Tokens": "8.1.2",
+          "System.IdentityModel.Tokens.Jwt": "8.1.2"
+        },
         "compile": {
           "bin/placeholder/Feedback.Core.dll": {}
         },
@@ -1065,6 +1100,21 @@
     }
   },
   "libraries": {
+    "AutoMapper/13.0.1": {
+      "sha512": "/Fx1SbJ16qS7dU4i604Sle+U9VLX+WSNVJggk6MupKVkYvvBm4XqYaeFuf67diHefHKHs50uQIS2YEDFhPCakQ==",
+      "type": "package",
+      "path": "automapper/13.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "automapper.13.0.1.nupkg.sha512",
+        "automapper.nuspec",
+        "icon.png",
+        "lib/net6.0/AutoMapper.dll",
+        "lib/net6.0/AutoMapper.xml"
+      ]
+    },
     "Azure.Core/1.35.0": {
       "sha512": "hENcx03Jyuqv05F4RBEPbxz29UrM3Nbhnr6Wl6NQpoU9BCIbL3XLentrxDCTrH54NLS11Exxi/o8MYgT/cnKFA==",
       "type": "package",
@@ -2740,6 +2790,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Feedback.Application/1.0.0": {
+      "type": "project",
+      "path": "../Feedback.Application/Feedback.Application.csproj",
+      "msbuildProject": "../Feedback.Application/Feedback.Application.csproj"
+    },
     "Feedback.Core/1.0.0": {
       "type": "project",
       "path": "../Feedback.Core/Feedback.Core.csproj",
@@ -2748,6 +2803,8 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "AutoMapper >= 13.0.1",
+      "Feedback.Application >= 1.0.0",
       "Feedback.Core >= 1.0.0",
       "Google.Apis.Auth >= 1.68.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.10",
@@ -2782,6 +2839,9 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+            "C:\\github\\360-feedback-app\\src\\api\\Feedback.Application\\Feedback.Application.csproj": {
+              "projectPath": "C:\\github\\360-feedback-app\\src\\api\\Feedback.Application\\Feedback.Application.csproj"
+            },
             "C:\\github\\360-feedback-app\\src\\api\\Feedback.Core\\Feedback.Core.csproj": {
               "projectPath": "C:\\github\\360-feedback-app\\src\\api\\Feedback.Core\\Feedback.Core.csproj"
             }
@@ -2803,6 +2863,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "AutoMapper": {
+            "target": "Package",
+            "version": "[13.0.1, )"
+          },
           "Google.Apis.Auth": {
             "target": "Package",
             "version": "[1.68.0, )"

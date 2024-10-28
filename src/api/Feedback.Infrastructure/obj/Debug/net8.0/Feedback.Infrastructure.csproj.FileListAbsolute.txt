@@ -28,3 +28,6 @@ C:\github\360-feedback-app\src\api\Feedback.Infrastructure\obj\Debug\net8.0\Feed
 C:\github\360-feedback-app\src\api\Feedback.Infrastructure\obj\Debug\net8.0\refint\Feedback.Infrastructure.dll
 C:\github\360-feedback-app\src\api\Feedback.Infrastructure\obj\Debug\net8.0\Feedback.Infrastructure.pdb
 C:\github\360-feedback-app\src\api\Feedback.Infrastructure\obj\Debug\net8.0\ref\Feedback.Infrastructure.dll
+C:\github\360-feedback-app\src\api\Feedback.Infrastructure\bin\Debug\net8.0\Feedback.Application.dll
+C:\github\360-feedback-app\src\api\Feedback.Infrastructure\bin\Debug\net8.0\Feedback.Application.pdb
+C:\github\360-feedback-app\src\api\Feedback.Infrastructure\obj\Debug\net8.0\Feedback.Infrastructure.sourcelink.json

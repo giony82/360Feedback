@@ -308,3 +308,7 @@ C:\github\360-feedback-app\src\api\Feedback.WebAPI\obj\Debug\net8.0\refint\Feedb
 C:\github\360-feedback-app\src\api\Feedback.WebAPI\obj\Debug\net8.0\Feedback.WebAPI.pdb
 C:\github\360-feedback-app\src\api\Feedback.WebAPI\obj\Debug\net8.0\Feedback.WebAPI.genruntimeconfig.cache
 C:\github\360-feedback-app\src\api\Feedback.WebAPI\obj\Debug\net8.0\ref\Feedback.WebAPI.dll
+C:\github\360-feedback-app\src\api\Feedback.WebAPI\obj\Debug\net8.0\Feedback.WebAPI.sourcelink.json
+C:\github\360-feedback-app\src\api\Feedback.WebAPI\bin\Debug\net8.0\AutoMapper.dll
+C:\github\360-feedback-app\src\api\Feedback.WebAPI\bin\Debug\net8.0\Feedback.Application.dll
+C:\github\360-feedback-app\src\api\Feedback.WebAPI\bin\Debug\net8.0\Feedback.Application.pdb

@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Feedback.WebAPI.Models.GoogleLoginRequest",
+        "Type": "Feedback.Core.Models.GoogleLoginRequest",
         "IsRequired": true
       }
     ],
