@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import logo from '../logo.svg'; // Import the logo
 
 const NavMenu = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const menuItems = [
     { name: 'Home', path: '/' },
     { name: 'Profile', path: '/profile' },
@@ -33,12 +33,21 @@ const NavMenu = () => {
                 {item.name}
               </Link>
             ))}
-            <button
-              onClick={logout}
-              className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-white hover:border-gray-300 hover:text-gray-300"
-            >
-              Logout
-            </button>
+            {user && (
+              <div className="flex items-center">
+                <img
+                  src={user.picture}
+                  alt="User Profile"
+                  className="h-8 w-8 rounded-full mr-2"
+                />
+                <button
+                  onClick={logout}
+                  className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-white hover:border-gray-300 hover:text-gray-300"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
           <div className="sm:hidden flex items-center">
             <Menu as="div" className="relative inline-block text-left">

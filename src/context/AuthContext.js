@@ -35,22 +35,25 @@ export const AuthProvider = ({ children }) => {
     return config;
   }, (error) => Promise.reject(error));
 
-  const login = async (provider, credential) => {
+  const login = async (provider, credential) => {    
     setLoading(true);
     setError(null);
     try {
       let response;
-      if (provider === 'google') {
-        console.log('Attempting Google login with credential:', credential);
-        response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/google`, { token: credential });
-      } else if (provider === 'linkedin') {
-        // LinkedIn login logic (if implemented)
-        console.log('Attempting LinkedIn login with code:', credential);
-        response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/linkedin`, { code: credential });
-      }
-      
+      switch (provider) {
+        case 'google':
+          console.log('Attempting Google login with credential:', credential);
+          response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/google`, { token: credential });
+          break;
+        case 'linkedin':
+          console.log('Attempting LinkedIn login with code:', credential);
+          response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/linkedin`, { code: credential });
+          break;
+        default:          
+          throw new Error('Unsupported provider');
+      }      
       console.log('Response from server:', response);
-      
+            
       if (response && response.data) {
         const { user: userData, token: authToken } = response.data;
         setUser(userData);
@@ -62,8 +65,7 @@ export const AuthProvider = ({ children }) => {
         throw new Error('No response data from server');
       }
     } catch (error) {
-      console.error('Login error:', error.message);
-      setError(error.message);
+      throw new Error(error);            
     } finally {
       setLoading(false);
     }

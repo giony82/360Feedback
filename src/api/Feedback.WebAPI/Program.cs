@@ -34,8 +34,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:3000")
+        builder => builder.WithOrigins("https://localhost:3000")
             .AllowAnyMethod()
+            .AllowCredentials()
             .AllowAnyHeader());
 });
 
@@ -54,6 +55,11 @@ builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IJwtSettings, JwtSettings>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
+builder.Services.AddScoped<ILinkedInAuthService, LinkedInAuthService>();
+builder.Services.AddHttpClient<ILinkedInAuthService, LinkedInAuthService>();
+
+
+
 
 var app = builder.Build();
 

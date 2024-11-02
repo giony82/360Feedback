@@ -1,12 +1,23 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Ignore build output
+bin/
+obj/
+.vs
+
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
 
+
 # testing
 /coverage
+
+# Ignore DLLs, PDBs, and XML files
+*.dll
+*.pdb
+*.xml
 
 # production
 /build
@@ -22,3 +33,18 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Ignore other common .NET build artifacts
+*.exe
+*.app
+*.cache
+*.deps.json
+*.json
+*.dll.config
+*.user
+*.suo
+*.dll
+*.pdb
+*.sln.ide
+
+*.dtbcache*

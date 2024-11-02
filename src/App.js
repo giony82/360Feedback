@@ -6,6 +6,7 @@ import LoginPage from './components/Auth/LoginPage';
 import Home from './pages/Home';
 import NavMenu from './components/NavMenu'; // Import the new NavMenu component
 import ProfileComponent from './components/ProfileComponent';
+import { LinkedInCallback } from 'react-linkedin-login-oauth2';
 
 function App() {
   return (
@@ -40,8 +41,8 @@ function AppContent() {
           <ProtectedRoute>
             <ProfileComponent />
           </ProtectedRoute>
-        } />
-        {/* Add more routes as needed */}
+        } />        
+        <Route path="/linkedin" element={<LinkedInCallback />} />
       </Routes>
     </div>
   );

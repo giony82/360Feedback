@@ -9,7 +9,8 @@ public class AuthorizationService(
     IGoogleAuthService googleAuthService,
     IUserRepository userRepository,
     IJwtService jwtService,
-    IMapper mapper)
+    IMapper mapper,
+    ILinkedInAuthService linkedInAuthService)
     : IAuthorizationService
 {
     public async Task<AuthResponseDTO> AuthenticateGoogleUserAsync(string token)
@@ -23,6 +24,23 @@ public class AuthorizationService(
         string appToken = jwtService.GenerateToken(user);
 
         return new AuthResponseDTO()
+        {
+            Token = appToken,
+            User = userDto
+        };
+    }
+
+    public async Task<AuthResponseDTO> AuthenticateLinkedInUserAsync(string code)
+    {
+        LinkedInAuthPayload linkedInUser = await linkedInAuthService.AuthenticateAsync(code);
+
+        User user = await userRepository.GetOrCreateUserAsync(linkedInUser.Email, linkedInUser.Name, linkedInUser.Picture);
+
+        var userDto = mapper.Map<UserDto>(user);
+
+        string appToken = jwtService.GenerateToken(user);
+
+        return new AuthResponseDTO
         {
             Token = appToken,
             User = userDto
