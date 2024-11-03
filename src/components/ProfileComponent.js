@@ -19,9 +19,13 @@ function ProfileComponent() {
       {profile.picture && <img src={profile.picture} alt="Profile" />}      
       <h2>My teams</h2>
       <ul>
-        {profile.teams.map(team => (
-          <li key={team.id}>{team.name}</li>
-        ))}
+        {profile.teams.length > 0 ? (
+          profile.teams.map(team => (
+            <li key={team.id}>{team.name}</li>
+          ))
+        ) : (
+          <li>No teams</li>
+        )}
       </ul>
     </div>
   );

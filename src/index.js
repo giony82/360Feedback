@@ -6,18 +6,13 @@ import { setContext } from '@apollo/client/link/context';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-
-// Create an HTTP link to your GraphQL server
 const httpLink = createHttpLink({
-  uri: 'https://localhost:5001/graphql', // Replace with your GraphQL server URL
+  uri: 'https://localhost:5001/graphql',
 });
 
-// Create an auth link to set the JWT token in the headers
 const authLink = setContext((_, { headers }) => {
-  // Get the token from local storage or any other storage method
-  const token = localStorage.getItem('token'); // Adjust based on your implementation
+  const token = localStorage.getItem('token'); 
 
-  // Return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
@@ -26,7 +21,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// Create the Apollo Client
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
@@ -38,7 +32,7 @@ root.render(
   <React.StrictMode>
      <ApolloProvider client={client}>
         <App />
-    </ApolloProvider>,
+    </ApolloProvider>
   </React.StrictMode>
 );
 
