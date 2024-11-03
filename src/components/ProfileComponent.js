@@ -1,35 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { Menu, Transition } from '@headlessui/react';
-import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_USER_PROFILE } from '../queries/userQueries';
 
 function ProfileComponent() {
-  const { api } = useAuth();
-  const [profile, setProfile] = useState(null);
+  const { loading, error, data } = useQuery(GET_USER_PROFILE, {
+    variables: { id: 1 },
+  });
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await api.get('/api/profile');
-        setProfile(response.data);
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      }
-    };
+  if (loading) return <p>Loading profile...</p>;
+  if (error) return <p>Error fetching profile: {error.message}</p>;
 
-    fetchProfile();
-  }, [api]);
+  const profile = data.user;
 
   return (
     <div>
-      {profile ? (
-        <div className="mt-6">
-          <p className="text-lg"><strong>Name:</strong> {profile.name}</p>
-          <p className="text-lg"><strong>Email:</strong> {profile.email}</p>
-        </div>
-      ) : (
-        <p className="mt-6">Loading profile...</p>
-      )}
+      <h1>{profile.name}</h1>
+      <p><strong>Email:</strong> {profile.email}</p>
+      {profile.picture && <img src={profile.picture} alt="Profile" />}      
+      <h2>My teams</h2>
+      <ul>
+        {profile.teams.map(team => (
+          <li key={team.id}>{team.name}</li>
+        ))}
+      </ul>
     </div>
   );
 }

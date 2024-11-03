@@ -29,7 +29,7 @@ function AppContent() {
 
   return (
     <div className="App">
-      {user && <NavMenu />} {/* Only show NavMenu when user is logged in */}
+      {user && <NavMenu />}
       <Routes>
         <Route path="/login" element={user ? <Navigate to="/" /> : <LoginPage />} />
         <Route path="/" element={

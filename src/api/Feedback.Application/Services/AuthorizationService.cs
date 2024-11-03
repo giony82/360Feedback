@@ -5,7 +5,7 @@ using Feedback.Core.Interfaces;
 
 namespace Feedback.Application.Services;
 
-public class AuthorizationService(
+internal class AuthorizationService(
     IGoogleAuthService googleAuthService,
     IUserRepository userRepository,
     IJwtService jwtService,

@@ -1,20 +1,22 @@
+using System.Reflection;
 using System.Text;
-using Feedback.Application.Interfaces;
-using Feedback.Application.Services;
+using Feedback.Application;
 using Feedback.Core.Interfaces;
 
 using Feedback.Infrastructure;
 using Feedback.Infrastructure.Profiles;
 using Feedback.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication;
+using Feedback.WebAPI.GraphQL;
+using GraphQL;
+
+using GraphQL.Types;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -48,17 +50,28 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("Feedback.Infrastructure")
+    ));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IJwtSettings, JwtSettings>();
-builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
-builder.Services.AddScoped<ILinkedInAuthService, LinkedInAuthService>();
-builder.Services.AddHttpClient<ILinkedInAuthService, LinkedInAuthService>();
+builder.Services.AddApplicationServices();
 
+// Register GraphQL types and schema
+builder.Services.AddScoped<UserQuery>();
+builder.Services.AddScoped<ISchema, AppSchema>();
 
+// Add GraphQL Services
+builder.Services.AddGraphQL(qlBuilder =>
+{
+    qlBuilder.AddGraphTypes(Assembly.GetExecutingAssembly());
+    qlBuilder.AddSystemTextJson();
+
+});
 
 
 var app = builder.Build();
@@ -70,12 +83,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+app.UseGraphQL("/graphql", config =>
+{
+    // require that the user be authenticated
+    config.AuthorizationRequired = true;
+
+    // require that the user be a member of at least one role listed
+    //config.AuthorizedRoles.Add("MyRole");
+    //config.AuthorizedRoles.Add("MyAlternateRole");
+
+    // require that the user pass a specific authorization policy
+    // config.AuthorizedPolicy = "MyPolicy";
+});
 
 
 app.Run();

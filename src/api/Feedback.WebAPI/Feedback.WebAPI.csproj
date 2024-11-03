@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GraphQL" Version="8.2.1" />
+    <PackageReference Include="GraphQL.Client.Abstractions" Version="6.1.0" />
+    <PackageReference Include="GraphQL.MicrosoftDI" Version="8.2.1" />
+    <PackageReference Include="GraphQL.NewtonsoftJson" Version="8.2.1" />
+    <PackageReference Include="GraphQL.Server.Core" Version="5.2.2" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.1.0" />
+    <PackageReference Include="GraphQL.Server.Transports.Subscriptions.Abstractions" Version="6.1.1" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="8.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">

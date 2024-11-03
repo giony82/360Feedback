@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Feedback.Application.Services
 {
-    public class LinkedInAuthService(HttpClient httpClient, IConfiguration configuration) : ILinkedInAuthService
+    internal class LinkedInAuthService(HttpClient httpClient, IConfiguration configuration) : ILinkedInAuthService
     {
         public async Task<LinkedInAuthPayload> AuthenticateAsync(string code)
         {

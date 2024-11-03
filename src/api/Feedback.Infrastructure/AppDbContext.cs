@@ -1,12 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Feedback.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Feedback.Infrastructure;
 
-public class AppDbContext : DbContext
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     public DbSet<User> Users
     {
         get; set;
+    }
+    public DbSet<Team> Teams
+    {
+        get; set;
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Teams)
+            .WithMany(t => t.Users)
+            .UsingEntity(j => j.ToTable("TeamUser"));
     }
 }
