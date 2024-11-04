@@ -1,5 +1,6 @@
-﻿using Feedback.Application.DTOs;
-using Feedback.Application.Interfaces;
+﻿using Feedback.Application.Contracts.DTOs.Authentication;
+using Feedback.Application.Contracts.Interfaces;
+using Feedback.WebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Feedback.WebAPI.Controllers;

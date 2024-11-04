@@ -1,7 +1,9 @@
-﻿public class LinkedInLoginRequest
+﻿namespace Feedback.WebAPI.Models;
+
+public class LinkedInLoginRequest
 {
     public string Code
     {
         get; set;
-    } // The authorization code received from LinkedIn
+    }
 }

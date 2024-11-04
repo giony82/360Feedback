@@ -1,18 +1,21 @@
 using System.Reflection;
 using System.Text;
 using Feedback.Application;
+using Feedback.Application.Contracts.Interfaces;
 using Feedback.Core.Interfaces;
-
+using Feedback.GraphQL;
 using Feedback.Infrastructure;
+using Feedback.Infrastructure.Data;
 using Feedback.Infrastructure.Profiles;
+using Feedback.Infrastructure.Repositories;
 using Feedback.Infrastructure.Services;
-using Feedback.WebAPI.GraphQL;
 using GraphQL;
 
 using GraphQL.Types;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,19 +63,22 @@ builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IJwtSettings, JwtSettings>();
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
+builder.Services.AddGraphQlServices();
 
-// Register GraphQL types and schema
-builder.Services.AddScoped<UserQuery>();
-builder.Services.AddScoped<ISchema, AppSchema>();
+builder.Services.AddHttpContextAccessor();
+
 
 // Add GraphQL Services
 builder.Services.AddGraphQL(qlBuilder =>
 {
     qlBuilder.AddGraphTypes(Assembly.GetExecutingAssembly());
     qlBuilder.AddSystemTextJson();
-
+    qlBuilder.AddUnhandledExceptionHandler(context =>
+    {
+        context.ErrorMessage = "An unexpected error occurred:" + context.Exception;
+    });
 });
-
 
 var app = builder.Build();
 

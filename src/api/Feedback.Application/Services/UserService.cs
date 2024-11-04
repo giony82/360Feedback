@@ -1,22 +1,25 @@
 ﻿using AutoMapper;
-using Feedback.Application.Interfaces;
-using Feedback.Core.Entities;
+using Feedback.Application.Contracts.DTOs;
+using Feedback.Application.Contracts.Interfaces;
 using Feedback.Core.Interfaces;
-using Feedback.Application.DTOs;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-internal class UserService(IUserRepository userRepository, IMapper mapper) : IUserService
+namespace Feedback.Application.Services;
+
+internal class UserService(IUserRepository userRepository, IWebUser webUser, IMapper mapper) : IUserService
 {
-    public async Task<IEnumerable<UserDto>> GetAllUsers()
+    public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
     {
         var users = await userRepository.GetAllUsers();
         return mapper.Map<IEnumerable<UserDto>>(users);
     }
 
-    public async Task<UserDto> GetUserById(int id)
+    public async Task<UserDto?> GetUserByIdAsync(int id)
     {
-        var user = await userRepository.GetUserById(id);
+        if (id == 0)
+        {
+            id = webUser.UserId;
+        }
+        User? user = await userRepository.GetUserById(id);
         return mapper.Map<UserDto>(user);
     }
 }

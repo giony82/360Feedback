@@ -4,7 +4,7 @@ import { GET_USER_PROFILE } from '../queries/userQueries';
 
 function ProfileComponent() {
   const { loading, error, data } = useQuery(GET_USER_PROFILE, {
-    variables: { id: 1 },
+    variables: { id: 0 },
   });
 
   if (loading) return <p>Loading profile...</p>;
@@ -19,13 +19,9 @@ function ProfileComponent() {
       {profile.picture && <img src={profile.picture} alt="Profile" />}      
       <h2>My teams</h2>
       <ul>
-        {profile.teams.length > 0 ? (
-          profile.teams.map(team => (
-            <li key={team.id}>{team.name}</li>
-          ))
-        ) : (
-          <li>No teams</li>
-        )}
+        {profile.teams.map(team => (
+          <li key={team.id}>{team.name}</li>
+        ))}
       </ul>
     </div>
   );

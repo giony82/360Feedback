@@ -1,4 +1,6 @@
-﻿using Feedback.Core.Interfaces;
+﻿using Feedback.Application.Contracts.DTOs.Authentication;
+using Feedback.Application.Contracts.Interfaces;
+using Feedback.Core.Interfaces;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
 

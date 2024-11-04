@@ -1,4 +1,5 @@
-﻿using Feedback.Core.Interfaces;
+﻿using Feedback.Application.Contracts.Interfaces;
+using Feedback.Core.Interfaces;
 using Microsoft.Extensions.Configuration;
 
 namespace Feedback.Infrastructure.Services;

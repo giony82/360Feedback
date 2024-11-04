@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Feedback.Application.DTOs;
-using Feedback.Application.DTOs.Feedback.Application.DTOs;
+using Feedback.Application.Contracts.DTOs;
+using Feedback.Application.Contracts.DTOs.Feedback.Application.DTOs;
 using Feedback.Core.Entities;
 
 namespace Feedback.Infrastructure.Profiles;

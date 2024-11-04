@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Feedback.Core.Entities
 {
-    [Table("Team")]
     public class Team
     {
-        [Key]
         public int Id
         {
             get; set;

@@ -7,7 +7,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const httpLink = createHttpLink({
-  uri: 'https://localhost:5001/graphql',
+  uri: process.env.REACT_APP_API_URL + '/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {

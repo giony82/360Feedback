@@ -15,6 +15,7 @@
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.1.0" />
     <PackageReference Include="GraphQL.Server.Transports.Subscriptions.Abstractions" Version="6.1.1" />
     <PackageReference Include="GraphQL.SystemTextJson" Version="8.2.1" />
+    <PackageReference Include="GraphQL.Tools" Version="1.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
@@ -26,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Feedback.Core\Feedback.Core.csproj" />
+    <ProjectReference Include="..\Feedback.GraphQL\Feedback.GraphQL.csproj" />
     <ProjectReference Include="..\Feedback.Infrastructure\Feedback.Infrastructure.csproj" />
   </ItemGroup>
 

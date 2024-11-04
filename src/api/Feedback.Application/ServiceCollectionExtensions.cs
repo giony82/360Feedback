@@ -1,4 +1,4 @@
-﻿using Feedback.Application.Interfaces;
+﻿using Feedback.Application.Contracts.Interfaces;
 using Feedback.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,8 +10,6 @@ namespace Feedback.Application
         {
             services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ILinkedInAuthService, LinkedInAuthService>();
-            services.AddHttpClient<ILinkedInAuthService, LinkedInAuthService>();
 
             return services;
         }

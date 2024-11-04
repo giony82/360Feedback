@@ -1,6 +1,7 @@
 using AutoMapper;
-using Feedback.Application.DTOs;
-using Feedback.Application.Interfaces;
+using Feedback.Application.Contracts.DTOs;
+using Feedback.Application.Contracts.DTOs.Authentication;
+using Feedback.Application.Contracts.Interfaces;
 using Feedback.Core.Interfaces;
 
 namespace Feedback.Application.Services;
@@ -21,9 +22,9 @@ internal class AuthorizationService(
 
         var userDto = mapper.Map<UserDto>(user);
 
-        string appToken = jwtService.GenerateToken(user);
+        var appToken = jwtService.GenerateToken(userDto);
 
-        return new AuthResponseDTO()
+        return new AuthResponseDTO
         {
             Token = appToken,
             User = userDto
@@ -32,13 +33,14 @@ internal class AuthorizationService(
 
     public async Task<AuthResponseDTO> AuthenticateLinkedInUserAsync(string code)
     {
-        LinkedInAuthPayload linkedInUser = await linkedInAuthService.AuthenticateAsync(code);
+        LinkedInAuthPayloadDto linkedInUser = await linkedInAuthService.AuthenticateAsync(code);
 
-        User user = await userRepository.GetOrCreateUserAsync(linkedInUser.Email, linkedInUser.Name, linkedInUser.Picture);
+        User user = await userRepository.GetOrCreateUserAsync(linkedInUser.Email, linkedInUser.Name,
+            linkedInUser.Picture);
 
         var userDto = mapper.Map<UserDto>(user);
 
-        string appToken = jwtService.GenerateToken(user);
+        var appToken = jwtService.GenerateToken(userDto);
 
         return new AuthResponseDTO
         {

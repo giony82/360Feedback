@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import NavMenu from './components/NavMenu'; // Import the new NavMenu component
 import ProfileComponent from './components/ProfileComponent';
 import { LinkedInCallback } from 'react-linkedin-login-oauth2';
+import Footer from './components/Layout/Footer'; // {{ edit_1 }}
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function AppContent() {
         } />        
         <Route path="/linkedin" element={<LinkedInCallback />} />
       </Routes>
+      <Footer /> 
     </div>
   );
 }

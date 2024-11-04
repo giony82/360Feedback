@@ -1,17 +1,17 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Feedback.Application.DTOs;
+using Feedback.Application.Contracts.DTOs;
+using Feedback.Application.Contracts.Interfaces;
 using Feedback.Core.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Feedback.Infrastructure.Services;
 
-// src/GoogleAuthAPI.Infrastructure/Services/JwtService.cs
 
 public class JwtService(IJwtSettings jwtSettings) : IJwtService
 {
-    public string GenerateToken(User user)
+    public string GenerateToken(UserDto user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
