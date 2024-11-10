@@ -1,0 +1,38 @@
+/* src/components/NavMenu.css */
+
+.appBar {
+    background-color: #1976d2; /* Customize AppBar color */
+}
+
+.logo {
+    height: 40px; /* Adjust logo size */
+    width: auto;
+}
+
+.userProfile {
+    height: 32px; /* Adjust user profile image size */
+    width: 32px;
+    border-radius: 50%; /* Make it circular */
+    margin-right: 8px; /* Add margin */
+}
+
+/* Media query to hide the menu icon on larger screens */
+@media (min-width: 600px) {
+    .menuIcon {
+        display: none; /* Hide the menu icon */
+    }
+}
+
+/* Media query to show the menu icon on smaller screens */
+@media (max-width: 599px) {
+    .menuIcon {
+        display: block; /* Show the menu icon */
+    }
+}
+
+/* Hide the menu icon when there is enough space for the menu items */
+@media (min-width: 900px) {
+    .menuIcon {
+        display: none; /* Hide the menu icon */
+    }
+}

@@ -10,7 +10,19 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         get; set;
     }
+    public DbSet<Company> Companies
+    {
+        get; set;
+    }
+    public DbSet<Project> Projects
+    {
+        get; set;
+    }
     public DbSet<Team> Teams
+    {
+        get; set;
+    }
+    public DbSet<SubscriptionPlan> SubscriptionPlans
     {
         get; set;
     }
@@ -20,5 +32,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.ApplyConfiguration(new FeedbackConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new TeamConfiguration());
+        modelBuilder.ApplyConfiguration(new SubscriptionPlanConfiguration());
+        modelBuilder.ApplyConfiguration(new CompanyConfiguration());
+        modelBuilder.ApplyConfiguration(new ProjectConfiguration());
     }
 }

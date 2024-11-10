@@ -2,25 +2,37 @@ import React from 'react';
 import GoogleLoginButton from './GoogleLoginButton';
 import LinkedInLoginButton from './LinkedInLoginButton';
 import { useAuth } from '../../context/AuthContext';
+import { Box, Typography, Paper, CircularProgress } from '@mui/material';
 
 function LoginPage() {
   const { loading } = useAuth();
   
   if (loading) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign in to your account</h2>
+    <Box 
+      sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        minHeight: '100vh', 
+        backgroundColor: 'grey.100' 
+      }}
+    >
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+        <Typography variant="h5" component="h2" sx={{ mb: 4, textAlign: 'center' }}>
+          Sign in to your account
+        </Typography>
         
-        <div className="space-y-4">
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <GoogleLoginButton />
           <LinkedInLoginButton />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
 

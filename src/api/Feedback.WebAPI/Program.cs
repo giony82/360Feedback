@@ -58,7 +58,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         b => b.MigrationsAssembly("Feedback.Infrastructure")
     ));
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IJwtSettings, JwtSettings>();

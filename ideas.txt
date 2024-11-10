@@ -1,0 +1,24 @@
+Overall flow
+
+For your 360 feedback app, a clear and structured approach to entity creation and user management is essential. Here’s a suggested flow that balances simplicity and functionality:
+Entity Creation Order
+1. Company: The first entity to be created. This represents the organization or business.
+Project: Once a company is established, you can create projects under that company. Projects can represent specific initiatives or areas of focus within the company.
+3. Teams: After creating a project, you can create teams that will work on that project. Teams can be composed of various users.
+4. Users: Users can be added to teams either from existing users or through invitations.
+User Selection
+Existing Users: You can allow the selection of users who are already registered in the system. This can be done through a search or dropdown interface that lists users based on their roles or departments.
+Invitations: For new users who are not yet registered, you can implement an invitation system. This would allow existing users (like admins) to send invitations via email, prompting the invited users to register and join the company.
+User Joining Process
+Join a Company:
+Users can be invited to join a company via an invitation link sent to their email. Upon accepting the invitation, they can create an account and automatically be associated with the company.
+Alternatively, users can register directly and select their company from a list if they already know it exists.
+2. Join a Project:
+Once users are part of a company, they can be assigned to projects. This can be done automatically based on their roles or manually by an admin.
+Users can also receive notifications about new projects they can join.
+3. Join a Team:
+After being assigned to a project, users can be added to specific teams. This can be done by project managers or team leads.
+Users can also be given the option to express interest in joining certain teams based on their skills or preferences.
+Summary
+This approach allows for a structured hierarchy (Company -> Project -> Team) while providing flexibility in user management through existing user selection and invitation systems. It ensures that users can easily navigate their way into the system and understand their roles within the company, project, and team context.
+Feel free to adjust this flow based on your specific requirements or user feedback!

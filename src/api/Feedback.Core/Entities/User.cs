@@ -15,4 +15,8 @@ public class User
     public ICollection<UserRole> UserRoles { get; set; }
 
     public DateTime JoinedDate { get; set; }
+
+    public bool IsVerified {get;set;}
+
+    public int CompanyId {get;set;}
 }

@@ -11,6 +11,8 @@ public class MappingProfile : Profile
     {
         CreateMap<User, UserDto>()
             .ForMember(dest => dest.Teams, opt => opt.MapFrom(src => src.Teams));
-        CreateMap<Team, TeamDto>();
+        CreateMap<Team, TeamDto>().ReverseMap();
+        CreateMap<Project, ProjectDto>().ReverseMap();
+        CreateMap<Company, CompanyDto>().ReverseMap();
     }
 }

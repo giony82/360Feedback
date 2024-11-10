@@ -1,10 +1,14 @@
 import React from 'react';
+import { Box, Typography } from '@mui/material';
+import styles from './Footer.module.css'; // Import the CSS module
 
 const Footer = () => {
   return (
-    <div className="absolute inset-x-0 bottom-0 text-center">
-      &copy; 2024 360 Degree Feedback
-    </div>
+    <Box className={styles.footer}>
+      <Typography variant="body2" color="text.secondary">
+        &copy; 2024 360 Degree Feedback
+      </Typography>
+    </Box>
   );
 };
 

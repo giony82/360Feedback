@@ -1,0 +1,10 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: var(--mui-palette-background-paper); /* Use CSS variable for Material-UI theme */
+    padding: 10px 0; /* Add some padding */
+    box-shadow: 0px -1px 5px rgba(0, 0, 0, 0.1); /* Add a shadow for better visibility */
+}

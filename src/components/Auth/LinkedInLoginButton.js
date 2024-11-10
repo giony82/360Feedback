@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import { useAuth } from '../../context/AuthContext';
+import { Button } from '@mui/material';
 import linkedinLogo from 'react-linkedin-login-oauth2/assets/linkedin.png';
 
 function LinkedInLoginButton() {
@@ -27,12 +28,20 @@ function LinkedInLoginButton() {
     };
 
     return (
-        <img 
-            onClick={handleClick} 
+        <Button 
+          variant="outlined" 
+          color="primary" 
+          fullWidth 
+          onClick={handleClick} 
+          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          <img 
             src={linkedinLogo} 
             alt="Sign in with LinkedIn" 
-            style={{ maxWidth: '180px', cursor: 'pointer' }} 
-        />
+            style={{ maxWidth: '24px', marginRight: '8px' }} 
+          />
+          Sign in with LinkedIn
+        </Button>
     );
 }
 

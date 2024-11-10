@@ -1,8 +1,10 @@
 ﻿using Feedback.Application.Contracts.DTOs;
 using Feedback.Application.Contracts.Interfaces;
+using Feedback.GraphQL.Mutations;
 using GraphQL;
 using GraphQL.Resolvers;
 using GraphQL.Types;
+
 
 public class UserQuery : ObjectGraphType
 {
