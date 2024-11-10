@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import {
     Box,
     Typography,
@@ -15,8 +14,10 @@ import {
     TableSortLabel,
 } from '@mui/material';
 import AddCompanyForm from './AddCompanyForm';
+import { useQuery } from '@apollo/client';
 import styles from './Companies.module.css';
-import { useQuery, gql } from '@apollo/client';
+
+import { GET_COMPANIES } from '../../queries/companyQueries'; // Import the query
 
 const headerCells = [
     { id: 'name', label: 'Company Name' },
@@ -24,36 +25,20 @@ const headerCells = [
     { id: 'teams', label: 'Teams' },
 ];
 
-// Define the GraphQL query to fetch companies
-const GET_COMPANIES = gql`
-    query GetCompanies {
-        companyQueries{
-            companies {
-                id
-                name                
-            }
-        }   
-    }
-`;
-
 const Companies = () => {
     const { loading, error, data, refetch } = useQuery(GET_COMPANIES);
     const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
 
     const sortedCompanies = React.useMemo(() => {
         if (!data || !data.companyQueries.companies) return [];
-        let sortableCompanies = [...data.companyQueries.companies];
-        sortableCompanies.sort((a, b) => {
+        return [...data.companyQueries.companies].sort((a, b) => {
             const aValue = a[sortConfig.key];
             const bValue = b[sortConfig.key];
             if (typeof aValue === 'string' && typeof bValue === 'string') {
-                return sortConfig.direction === 'asc'
-                    ? aValue.localeCompare(bValue)
-                    : bValue.localeCompare(aValue);
+                return sortConfig.direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
             }
             return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
         });
-        return sortableCompanies;
     }, [data, sortConfig]);
 
     const requestSort = (key) => {
@@ -104,7 +89,7 @@ const Companies = () => {
                                 <TableRow key={company.id}>
                                     <TableCell>{company.name}</TableCell>
                                     <TableCell>{company.projects}</TableCell>
-                                    <TableCell>{2}</TableCell>
+                                    <TableCell>{1}</TableCell>
                                     <TableCell>
                                         <Button variant="text" color="primary">Edit</Button>
                                     </TableCell>

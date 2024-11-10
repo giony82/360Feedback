@@ -11,3 +11,23 @@ export const GET_PLANS = gql`
         }
     }
 `;
+
+// Define the GraphQL query to fetch companies
+export const GET_COMPANIES = gql`
+    query GetCompanies {
+        companyQueries {
+            companies {
+                id
+                name
+                projects{
+                    id
+                    name
+                }
+                teams {
+                    id
+                    name
+                }
+            }
+        }   
+    }
+`;

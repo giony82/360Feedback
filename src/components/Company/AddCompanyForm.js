@@ -17,7 +17,7 @@ const ADD_COMPANY = gql`
 
 const AddCompanyForm = ({ onCompanyAdded }) => {
     const [newCompanyName, setNewCompanyName] = useState('');
-    const [selectedPlanId, setSelectedPlanId] = useState(1); // Default to Free plan
+    const [selectedPlanId, setSelectedPlanId] = useState(4); // Default to Free plan
     const [addCompany] = useMutation(ADD_COMPANY);
     
     // Fetch plans
@@ -29,7 +29,7 @@ const AddCompanyForm = ({ onCompanyAdded }) => {
             try {
                 await addCompany({ variables: { company: { name: newCompanyName, subscriptionPlanId: selectedPlanId } } });
                 setNewCompanyName('');
-                setSelectedPlanId(1); // Reset to default plan
+                setSelectedPlanId(4); // Reset to default plan
                 onCompanyAdded(); 
             } catch (error) {
                 console.error('Error adding company:', error);
