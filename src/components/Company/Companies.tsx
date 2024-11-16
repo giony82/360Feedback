@@ -17,7 +17,8 @@ import AddCompanyForm from './AddCompanyForm';
 import { useQuery } from '@apollo/client';
 import styles from './Companies.module.css';
 
-import { GET_COMPANIES } from '../../queries/companyQueries'; // Import the query
+import { GET_COMPANIES } from '../../queries/companyQueries';
+import { Company } from '../../types';
 
 const headerCells = [
     { id: 'name', label: 'Company Name' },
@@ -25,9 +26,9 @@ const headerCells = [
     { id: 'teams', label: 'Teams' },
 ];
 
-const Companies = () => {
-    const { loading, error, data, refetch } = useQuery(GET_COMPANIES);
-    const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
+const Companies: React.FC = () => {
+    const { loading, error, data, refetch } = useQuery<{ companyQueries: { companies: Company[] } }>(GET_COMPANIES);
+    const [sortConfig, setSortConfig] = useState<{ key: keyof Company; direction: 'asc' | 'desc' }>({ key: 'name', direction: 'asc' });
 
     const sortedCompanies = React.useMemo(() => {
         if (!data || !data.companyQueries.companies) return [];
@@ -35,14 +36,17 @@ const Companies = () => {
             const aValue = a[sortConfig.key];
             const bValue = b[sortConfig.key];
             if (typeof aValue === 'string' && typeof bValue === 'string') {
-                return sortConfig.direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-            }
-            return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
+                return sortConfig.direction === 'asc' ? 
+                aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+            } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+                return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
+            }            
+            return 0; // or handle as needed
         });
     }, [data, sortConfig]);
 
-    const requestSort = (key) => {
-        let direction = 'asc';
+    const requestSort = (key: keyof Company) => {
+        let direction: 'asc' | 'desc' = 'asc';
         if (sortConfig.key === key && sortConfig.direction === 'asc') {
             direction = 'desc';
         }
@@ -68,7 +72,7 @@ const Companies = () => {
                                     <TableSortLabel
                                         active={sortConfig.key === headerCell.id}
                                         direction={sortConfig.key === headerCell.id ? sortConfig.direction : 'asc'}
-                                        onClick={() => requestSort(headerCell.id)}
+                                        onClick={() => requestSort(headerCell.id as keyof Company)}
                                     >
                                         <strong>{headerCell.label}</strong>
                                     </TableSortLabel>
@@ -89,7 +93,7 @@ const Companies = () => {
                                 <TableRow key={company.id}>
                                     <TableCell>{company.name}</TableCell>
                                     <TableCell>{company.projects}</TableCell>
-                                    <TableCell>{1}</TableCell>
+                                    <TableCell>{company.teams}</TableCell>
                                     <TableCell>
                                         <Button variant="text" color="primary">Edit</Button>
                                     </TableCell>

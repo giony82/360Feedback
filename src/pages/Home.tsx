@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 
 function Home() {
-  const { user } = useAuth();
+  const { user } = useAuth() || { user: null };
   if (!user) {
     return <Navigate to="/login" />;
   }

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Button, Menu, MenuItem, Typography, Drawer, List, ListItem, Container, Box, Tooltip, Avatar } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Button, Menu, MenuItem, Typography, Drawer, List, ListItem, Container, Box, Tooltip, Avatar, ListItemButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../logo.svg'; // Import the logo
 import './NavMenu.css'; // Import the CSS file
-
 const NavMenu = () => {
-  const { user, logout } = useAuth();
+  const authContext = useAuth();
+  const { user, logout } = authContext || {};
   
-  const [anchorEl, setAnchorEl] = useState(null); // State for submenu anchor
-  const [submenuIndex, setSubmenuIndex] = useState(null); // State for tracking which submenu is open
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null); // Updated type to allow HTMLElement
+  const [submenuIndex, setSubmenuIndex] = useState<number | null>(null); // Updated type to allow number or null
   const [drawerOpen, setDrawerOpen] = useState(false); // State for drawer
 
   const menuItems = [
@@ -28,9 +28,8 @@ const NavMenu = () => {
     { name: 'Profile', path: '/profile' },
     { name: 'Contact Us', path: '/contact' },
   ];
-
-  const handleMenuClick = (event, index) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number) => {
+    setAnchorEl(event.currentTarget as HTMLElement);
     setSubmenuIndex(index);
   };
 
@@ -39,7 +38,7 @@ const NavMenu = () => {
     setSubmenuIndex(null);
   };
 
-  const toggleDrawer = (open) => () => {
+  const toggleDrawer = (open: boolean) => () => {
     setDrawerOpen(open);
   };
 
@@ -51,14 +50,14 @@ const NavMenu = () => {
     >
       <List>
         {menuItems.map((item) => (
-          <ListItem button key={item.name} component={Link} to={item.path}>
+          <ListItemButton key={item.name} component={Link} to={item.path}>
             {item.name}
-          </ListItem>
+          </ListItemButton>
         ))}
         {user && (
-          <ListItem button onClick={logout}>
+          <ListItemButton onClick={logout}>
             Logout
-          </ListItem>
+          </ListItemButton>
         )}
       </List>
     </div>

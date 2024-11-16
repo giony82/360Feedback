@@ -17,8 +17,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GoogleOAuthProvider 
-        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-        onScriptLoadError={(error) => console.error('Error loading Google Sign-In script:', error)}
+        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ''}
+        onScriptLoadError={() => console.error('Error loading Google Sign-In script')}
         onScriptLoadSuccess={() => console.log('Google Sign-In script loaded successfully')}
       >
         <AuthProvider>
@@ -32,7 +32,7 @@ function App() {
 }
 
 function AppContent() {
-  const { user } = useAuth();
+  const { user } = useAuth() || {};
 
   return (
     <div className="App">
@@ -61,8 +61,9 @@ function AppContent() {
   );
 }
 
-function ProtectedRoute({ children }) {
-  const { user } = useAuth();
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const auth = useAuth(); // Get the auth context
+  const user = auth ? auth.user : null; // Check for null before accessing user
   return user ? children : <Navigate to="/login" />;
 }
 

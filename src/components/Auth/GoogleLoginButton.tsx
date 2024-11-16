@@ -1,14 +1,17 @@
-import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { CredentialResponse } from '../../types';
 
 function GoogleLoginButton() {
-  const { login } = useAuth();
+  const authContext = useAuth();
+  if (!authContext) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  const { login } = authContext;
   const navigate = useNavigate();
 
-  const handleSuccess = async (credentialResponse) => {
+  const handleSuccess = async (credentialResponse: CredentialResponse) => {
     console.log('Google Sign-In successful. Response:', credentialResponse);
     try {
       await login('google', credentialResponse.credential);
@@ -18,19 +21,17 @@ function GoogleLoginButton() {
     }
   };
 
-  const handleError = (error) => {
+  const handleError = (error: unknown) => {
     console.error('Google Sign-In failed. Error:', error);
   };
 
   return (
-    <Button 
-      variant="contained" 
-      color="primary" 
-      fullWidth 
-      onClick={() => GoogleLogin({ onSuccess: handleSuccess, onError: handleError })}
-    >
-      Sign in with Google
-    </Button>
+    <>
+      <GoogleLogin
+        onSuccess={(credentialResponse) => handleSuccess({ credential: credentialResponse.credential ?? '' })}
+        onError={() => handleError("Cannot login")}
+      />      
+    </>
   );
 }
 

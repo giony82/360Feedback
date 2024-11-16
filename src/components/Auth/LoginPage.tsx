@@ -5,7 +5,8 @@ import { useAuth } from '../../context/AuthContext';
 import { Box, Typography, Paper, CircularProgress } from '@mui/material';
 
 function LoginPage() {
-  const { loading } = useAuth();
+  const authContext = useAuth();
+  const loading = authContext?.loading;
   
   if (loading) {
     return <CircularProgress />;

@@ -5,13 +5,13 @@ import { Button } from '@mui/material';
 import linkedinLogo from 'react-linkedin-login-oauth2/assets/linkedin.png';
 
 function LinkedInLoginButton() {
-    const { login } = useAuth();
+    const { login } = useAuth()!;
     const hasLoggedInRef = useRef(false);
 
     const { linkedInLogin } = useLinkedIn({
-        clientId: process.env.REACT_APP_LINKEDIN_CLIENT_ID,
+        clientId: process.env.REACT_APP_LINKEDIN_CLIENT_ID || '',
         redirectUri: `${window.location.origin}/linkedin`,
-        scope: process.env.REACT_APP_LINKEDIN_SCOPE,
+        scope: process.env.REACT_APP_LINKEDIN_SCOPE || '',
         onError: (error) => {
             console.error(error);
         },

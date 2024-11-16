@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import { useMutation, useQuery, gql } from '@apollo/client';
-import { GET_PLANS } from '../../queries/companyQueries'; // Import the query
+import PropTypes from 'prop-types'; // Import PropTypes
 
 // Define the GraphQL mutation
-const ADD_COMPANY = gql`
-    mutation AddCompany($company: CompanyInput!) {
-        companyMutations {
-            addCompany(company: $company) {            
-                name,
-                subscriptionPlanId            
-            }
-        }
-    }
-`;
+import { ADD_COMPANY } from '../../queries/mutations/companyMutations';
 
-const AddCompanyForm = ({ onCompanyAdded }) => {
+const AddCompanyForm = ({ onCompanyAdded }: { onCompanyAdded: () => void }) => {
     const [newCompanyName, setNewCompanyName] = useState('');
     const [selectedPlanId, setSelectedPlanId] = useState(4); // Default to Free plan
     const [addCompany] = useMutation(ADD_COMPANY);
     
     // Fetch plans
+    // TODO
     //const { loading: loadingPlans, error: errorPlans, data: plansData } = useQuery(GET_PLANS);
     var plansData = { plans:[{id:4, name:"Free"}] };
 
@@ -54,7 +46,7 @@ const AddCompanyForm = ({ onCompanyAdded }) => {
                 <Select
                     labelId="plan-select-label"
                     value={selectedPlanId}
-                    onChange={(e) => setSelectedPlanId(e.target.value)}
+                    onChange={(e) => setSelectedPlanId(Number(e.target.value))}
                     label="Plan"
                 >
                     {plansData.plans.map((plan) => (
@@ -69,6 +61,11 @@ const AddCompanyForm = ({ onCompanyAdded }) => {
             </Button>
         </Box>
     );
+};
+
+// Add prop types validation
+AddCompanyForm.propTypes = {
+    onCompanyAdded: PropTypes.func.isRequired, // Validate the prop type
 };
 
 export default AddCompanyForm; 
