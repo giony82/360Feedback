@@ -1,0 +1,12 @@
+.headerCell {
+    background-color: #f7f7f7;
+    color:red;
+}
+
+.evenRow {
+    background-color: #f5f5f5;
+}
+
+.oddRow {
+    background-color: #ffffff;
+}
