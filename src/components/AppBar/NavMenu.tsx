@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Button, Menu, MenuItem, Typography, Drawer, List, ListItem, Container, Box, Tooltip, Avatar, ListItemButton } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Button, Menu, MenuItem, Drawer, List, Container, Box, Tooltip, Avatar, ListItemButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAuth } from '../../context/AuthContext';
-import logo from '../../logo.svg'; // Import the logo
-import './NavMenu.css'; // Import the CSS file
+import logo from '../../logo.svg';
+import './NavMenu.css';
+
 const NavMenu = () => {
   const authContext = useAuth();
   const { user, logout } = authContext || {};
-  
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null); // Updated type to allow HTMLElement
-  const [submenuIndex, setSubmenuIndex] = useState<number | null>(null); // Updated type to allow number or null
+
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [submenuIndex, setSubmenuIndex] = useState<number | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false); // State for drawer
 
   const menuItems = [
-    { name: 'Home', path: '/' },    
+    { name: 'Home', path: '/' },
     {
       name: 'My organization',
       path: '/',
@@ -22,9 +23,9 @@ const NavMenu = () => {
         { name: 'Groups or Companies', path: '/companies' },
         { name: 'Projects', path: '/projects' },
         { name: 'Teams', path: '/teams' },
-        { name: 'Users', path: '/users' },        
+        { name: 'Users', path: '/users' },
       ],
-    },    
+    },
     { name: 'Profile', path: '/profile' },
     { name: 'Contact Us', path: '/contact' },
   ];

@@ -7,5 +7,7 @@ public class AppQuery : ObjectGraphType
     {
         Field<UserQuery>("userQueries").Resolve(context => new UserQuery(userService));
         Field<CompanyQuery>("companyQueries").Resolve(context => new { });
+        Field<SubscriptionPlanQuery>("subscriptionPlanQueries").Resolve(context => new { });
+
     }
 }

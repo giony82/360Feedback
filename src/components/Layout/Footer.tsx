@@ -4,7 +4,7 @@ import styles from './Footer.module.css'; // Import the CSS module
 
 const Footer = () => {
   return (
-    <Box className={styles.footer}>
+    <Box className={''}>
       <Typography variant="body2" color="text.secondary">
         &copy; 2024 360 Degree Feedback
       </Typography>

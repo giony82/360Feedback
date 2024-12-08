@@ -8,3 +8,8 @@ declare module '*.png' {
     const content: string;
     export default content;
 }
+
+declare module 'company/CompanyComponent' {
+  const CompanyComponent: React.ComponentType<any>;
+  export default CompanyComponent;
+}

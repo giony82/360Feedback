@@ -7,6 +7,7 @@ obj/
 
 # dependencies
 /node_modules
+/module_federation/company/node_modules
 /.pnp
 .pnp.js
 

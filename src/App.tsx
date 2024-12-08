@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, startTransition } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -9,7 +9,14 @@ import NavMenu from './components/AppBar/NavMenu';
 import Profile from './components/Profile';
 import { LinkedInCallback } from 'react-linkedin-login-oauth2';
 import Footer from './components/Layout/Footer'; 
-import Companies from './components/Company/Companies'; 
+//import Companies from 'companyModule/Companies'; 
+//const Companies = React.lazy(() => import("company/CompanyComponent"));
+const Companies = React.lazy(() =>
+  import("company/CompanyComponent").catch((err) => {
+    console.error("Failed to load Companies module:", err);
+    return { default: () => <div>Error loading Companies module</div> };
+  })
+);
 
 const theme = createTheme(); // Create a default theme
 
@@ -49,11 +56,15 @@ function AppContent() {
             <Profile/>
           </ProtectedRoute>
         } />
-        <Route path="/companies" element={
+
+      <Route path="/companies" element={
           <ProtectedRoute>
-            <Companies />
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <Companies/>
+            </React.Suspense>
           </ProtectedRoute>
         } />
+        
         <Route path="/linkedin" element={<LinkedInCallback />} />
       </Routes>
       <Footer />       
@@ -64,7 +75,7 @@ function AppContent() {
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const auth = useAuth(); // Get the auth context
   const user = auth ? auth.user : null; // Check for null before accessing user
-  return user ? children : <Navigate to="/login" />;
+  return user ? <>{children}</> : <Navigate to="/login" />;
 }
 
 export default App;

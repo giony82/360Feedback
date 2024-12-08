@@ -1,5 +1,4 @@
-﻿using Feedback.Core.Entities;
-using Feedback.Core.Interfaces;
+﻿using Feedback.Core.Interfaces;
 using Feedback.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
