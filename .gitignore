@@ -40,7 +40,6 @@ yarn-error.log*
 *.app
 *.cache
 *.deps.json
-*.json
 *.dll.config
 *.user
 *.suo
