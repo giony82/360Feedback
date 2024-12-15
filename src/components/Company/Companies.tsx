@@ -13,12 +13,11 @@ import {
     CircularProgress,
     TableSortLabel,
 } from '@mui/material';
+import CompanyService from '../../services/companyService';
+import { Company } from '../../types';
 import AddCompanyForm from './AddCompanyForm';
-import { useQuery } from '@apollo/client';
 import styles from './Companies.module.css';
 
-import { GET_COMPANIES } from '../../queries/companyQueries';
-import { Company } from '../../types';
 
 const headerCells = [
     { id: 'name', label: 'Company Name' },
@@ -27,23 +26,47 @@ const headerCells = [
 ];
 
 const Companies: React.FC = () => {
-    const { loading, error, data, refetch } = useQuery<{ companyQueries: { companies: Company[] } }>(GET_COMPANIES);
-    const [sortConfig, setSortConfig] = useState<{ key: keyof Company; direction: 'asc' | 'desc' }>({ key: 'name', direction: 'asc' });
+    const [companies, setCompanies] = useState<Company[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [sortConfig, setSortConfig] = useState<{ key: keyof Company; direction: 'asc' | 'desc' }>({ 
+        key: 'name', 
+        direction: 'asc' 
+    });
+
+    const loadCompanies = async () => {
+        try {
+            setLoading(true);
+            const data = await CompanyService.fetchCompanies();
+            console.log("Fetched companies:", data);
+            setCompanies(data);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'An error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        loadCompanies();
+    }, []);
+
+    const handleCompanyAdded = () => {
+        console.log("Adding company, refreshing list...");
+        loadCompanies();
+    };
 
     const sortedCompanies = React.useMemo(() => {
-        if (!data || !data.companyQueries.companies) return [];
-        return [...data.companyQueries.companies].sort((a, b) => {
+        return [...companies].sort((a, b) => {
             const aValue = a[sortConfig.key];
             const bValue = b[sortConfig.key];
             if (typeof aValue === 'string' && typeof bValue === 'string') {
                 return sortConfig.direction === 'asc' ? 
-                aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-            } else if (typeof aValue === 'number' && typeof bValue === 'number') {
-                return sortConfig.direction === 'asc' ? aValue - bValue : bValue - aValue;
-            }            
-            return 0; // or handle as needed
+                    aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+            }
+            return 0;
         });
-    }, [data, sortConfig]);
+    }, [companies, sortConfig]);
 
     const requestSort = (key: keyof Company) => {
         let direction: 'asc' | 'desc' = 'asc';
@@ -52,16 +75,16 @@ const Companies: React.FC = () => {
         }
         setSortConfig({ key, direction });
     };
-
-    if (loading) return <CircularProgress />;
-    if (error) return <p>Error fetching companies: {error.message}</p>;
+    
+    if (error) return <p>Error fetching companies: {error}</p>;
 
     return (
         <Box sx={{ p: 4 }}>
             <Typography variant="h4" component="h1" sx={{ mb: 4 }}>
                 Manage Companies
             </Typography>
-            <AddCompanyForm onCompanyAdded={refetch} />
+
+            <AddCompanyForm onCompanyAdded={handleCompanyAdded}/>
 
             <TableContainer component={Paper}>
                 <Table>
@@ -82,15 +105,16 @@ const Companies: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sortedCompanies.length === 0 ? (
+                        {!loading && 
+                        sortedCompanies.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={4} align="center">
                                     You don't have any companies yet.
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            sortedCompanies.map((company) => (
-                                <TableRow key={company.id}>
+                            sortedCompanies.map((company, index) => (
+                                <TableRow key={company.id} className={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
                                     <TableCell>{company.name}</TableCell>
                                     <TableCell>{company.projects}</TableCell>
                                     <TableCell>{company.teams}</TableCell>
@@ -100,6 +124,9 @@ const Companies: React.FC = () => {
                                 </TableRow>
                             ))
                         )}
+                        {
+                            (loading && <TableRow><TableCell colSpan={5}><CircularProgress /></TableCell></TableRow>)
+                        }
                     </TableBody>
                 </Table>
             </TableContainer>

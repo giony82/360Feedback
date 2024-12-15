@@ -16,6 +16,7 @@ public static class ServiceCollectionExtensions
         services.AddHttpClient<ILinkedInAuthService, LinkedInAuthService>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
+        services.AddScoped<ISubscriptionPlanRepository, SubscriptionPlanRepository>();
 
         return services;
     }

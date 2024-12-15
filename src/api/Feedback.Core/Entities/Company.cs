@@ -13,7 +13,6 @@ public class Company
         get; set;
     }
 
-    // Navigation property to associate company with multiple projects
     public ICollection<Project> Projects
     {
         get; set;

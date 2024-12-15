@@ -10,8 +10,10 @@ import Profile from './components/Profile';
 import { LinkedInCallback } from 'react-linkedin-login-oauth2';
 import Footer from './components/Layout/Footer'; 
 import Companies from './components/Company/Companies'; 
+import { ErrorProvider } from './context/ErrorContext';
+import ErrorBanner from './components/ErrorBanner';
 
-const theme = createTheme(); // Create a default theme
+const theme = createTheme();
 
 function App() {
   return (
@@ -21,12 +23,15 @@ function App() {
         onScriptLoadError={() => console.error('Error loading Google Sign-In script')}
         onScriptLoadSuccess={() => console.log('Google Sign-In script loaded successfully')}
       >
-        <AuthProvider>
-          <Router>
-            <AppContent />
-          </Router>
-        </AuthProvider>      
-    </GoogleOAuthProvider>
+        <ErrorProvider>
+          <ErrorBanner />
+          <AuthProvider>
+            <Router>
+              <AppContent />
+            </Router>
+          </AuthProvider>      
+        </ErrorProvider>
+      </GoogleOAuthProvider>
     </ThemeProvider>
   );
 }
@@ -61,10 +66,10 @@ function AppContent() {
   );
 }
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
+function ProtectedRoute({ children }: { children: React.ReactNode }): JSX.Element {
   const auth = useAuth(); // Get the auth context
   const user = auth ? auth.user : null; // Check for null before accessing user
-  return user ? children : <Navigate to="/login" />;
+  return user ? <>{children}</> : <Navigate to="/login" />;
 }
 
 export default App;

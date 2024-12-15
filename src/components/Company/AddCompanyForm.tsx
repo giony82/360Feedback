@@ -1,36 +1,57 @@
-import React, { useState } from 'react';
-import { TextField, Button, Box, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
-import { useMutation, useQuery, gql } from '@apollo/client';
-import PropTypes from 'prop-types'; // Import PropTypes
-
-// Define the GraphQL mutation
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Box, MenuItem, Select, InputLabel, FormControl, CircularProgress } from '@mui/material';
+import { useMutation } from '@apollo/client';
+import PropTypes from 'prop-types';
 import { ADD_COMPANY } from '../../queries/mutations/companyMutations';
+import { Plan } from '../../types/companyTypes';
+import { fetchPlans } from '../../services/planService';
+import { useError } from '../../context/ErrorContext';
 
-const AddCompanyForm = ({ onCompanyAdded }: { onCompanyAdded: () => void }) => {
+interface AddCompanyFormProps {
+    onCompanyAdded: () => void;
+}
+
+const AddCompanyForm: React.FC<AddCompanyFormProps> = ({ onCompanyAdded }) => {
+    const { setError } = useError();
     const [newCompanyName, setNewCompanyName] = useState('');
-    const [selectedPlanId, setSelectedPlanId] = useState(4); // Default to Free plan
+    const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
+    const [plans, setPlans] = useState<Plan[]>([]);
     const [addCompany] = useMutation(ADD_COMPANY);
+    const [loading, setLoading] = useState(false);
     
-    // Fetch plans
-    // TODO
-    //const { loading: loadingPlans, error: errorPlans, data: plansData } = useQuery(GET_PLANS);
-    var plansData = { plans:[{id:4, name:"Free"}] };
+    useEffect(() => {
+        const loadPlans = async () => {
+            try {
+                const fetchedPlans = await fetchPlans();
+                setPlans(fetchedPlans);
+                if (fetchedPlans.length > 0) {
+                    setSelectedPlanId(fetchedPlans[0].id);
+                }
+            } catch (error) {
+                console.error('Error loading plans:', error);
+                setError('Failed to load plans: '+error);
+            }
+        };
+
+        loadPlans();
+    }, [setError]);
 
     const handleAddCompany = async () => {
-        if (newCompanyName.trim()) {
+        if (newCompanyName.trim() && selectedPlanId !== null) {
+            setLoading(true);
             try {
                 await addCompany({ variables: { company: { name: newCompanyName, subscriptionPlanId: selectedPlanId } } });
                 setNewCompanyName('');
-                setSelectedPlanId(4); // Reset to default plan
+                setSelectedPlanId(plans[0].id);
                 onCompanyAdded(); 
             } catch (error) {
                 console.error('Error adding company:', error);
+                setError('Failed to add company.');
+            } finally {
+                setLoading(false);
             }
         }
     };
-
-    //if (loadingPlans) return <p>Loading plans...</p>;
-    //if (errorPlans) return <p>Error fetching plans: {errorPlans.message}</p>;
 
     return (
         <Box sx={{ mb: 4, display: 'flex', alignItems: 'center' }}>
@@ -45,27 +66,30 @@ const AddCompanyForm = ({ onCompanyAdded }: { onCompanyAdded: () => void }) => {
                 <InputLabel id="plan-select-label">Plan</InputLabel>
                 <Select
                     labelId="plan-select-label"
-                    value={selectedPlanId}
+                    value={selectedPlanId || ''}
                     onChange={(e) => setSelectedPlanId(Number(e.target.value))}
                     label="Plan"
                 >
-                    {plansData.plans.map((plan) => (
+                    {plans.map((plan: Plan) => (
                         <MenuItem key={plan.id} value={plan.id}>
                             {plan.name}
                         </MenuItem>
                     ))}
                 </Select>
             </FormControl>
-            <Button variant="contained" color="primary" onClick={handleAddCompany}>
-                Add Company
-            </Button>
+            {loading ? (
+                <CircularProgress size={24} />
+            ) : (
+                <Button variant="contained" color="primary" onClick={handleAddCompany}>
+                    Add Company
+                </Button>
+            )}
         </Box>
     );
 };
 
-// Add prop types validation
 AddCompanyForm.propTypes = {
-    onCompanyAdded: PropTypes.func.isRequired, // Validate the prop type
+    onCompanyAdded: PropTypes.func.isRequired,
 };
 
-export default AddCompanyForm; 
+export default React.memo(AddCompanyForm);

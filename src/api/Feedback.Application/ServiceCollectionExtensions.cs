@@ -11,6 +11,7 @@ namespace Feedback.Application
             services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
 
             return services;
         }
