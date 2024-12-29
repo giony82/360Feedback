@@ -24,6 +24,12 @@ public class ProjectDto
         get; set;
     }
 
+    public IdName Company
+    {
+        get;
+        set;
+    }
+
     public int CompanyId
     {
         get; set;

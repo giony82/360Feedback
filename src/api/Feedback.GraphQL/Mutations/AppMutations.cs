@@ -7,5 +7,6 @@ public class AppMutations : ObjectGraphType
     public AppMutations()
     {
         Field<CompanyMutations>("companyMutations").Resolve(context => new { });
+        Field<ProjectMutations>("projectMutations").Resolve(context => new { });
     }
 }

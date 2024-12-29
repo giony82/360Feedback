@@ -12,6 +12,7 @@ import Footer from './components/Layout/Footer';
 import Companies from './components/Company/Companies'; 
 import { ErrorProvider } from './context/ErrorContext';
 import ErrorBanner from './components/ErrorBanner';
+import Projects from './components/Project/Projects';
 
 const theme = createTheme();
 
@@ -60,6 +61,7 @@ function AppContent() {
           </ProtectedRoute>
         } />
         <Route path="/linkedin" element={<LinkedInCallback />} />
+        <Route path="/projects" element={<Projects />} />
       </Routes>
       <Footer />       
     </div>

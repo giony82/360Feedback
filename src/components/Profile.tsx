@@ -17,7 +17,7 @@ function Profile() {
       <Box sx={{ maxWidth: 'lg', mx: 'auto', px: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
           <Avatar src={profile.picture} alt="user-avatar-image" sx={{ width: 128, height: 128, border: '4px solid white' }} />
-        </Box>camera
+        </Box>
         <Box sx={{ textAlign: 'center', mb: 2 }}>
           <Typography variant="h4" component="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
             {profile.name}
@@ -30,9 +30,8 @@ function Profile() {
           {/* Add any additional content here if needed */}
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2 }}>
-          <Chip label=".NET DEV" variant="outlined" color="primary" />
-          <Chip label="CX Strategy" variant="outlined" color="primary" />
-          <Chip label="Project Manager" variant="outlined" color="primary" />
+          <Chip label="label1" variant="outlined" color="primary" />
+          <Chip label="label2" variant="outlined" color="primary" />          
         </Box>
       </Box>
     </Box>

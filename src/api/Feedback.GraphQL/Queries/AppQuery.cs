@@ -1,13 +1,15 @@
-﻿using Feedback.Application.Contracts.Interfaces;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 
-public class AppQuery : ObjectGraphType
+namespace Feedback.GraphQL.Queries
 {
-    public AppQuery(IUserService userService)
+    public class AppQuery : ObjectGraphType
     {
-        Field<UserQuery>("userQueries").Resolve(context => new UserQuery(userService));
-        Field<CompanyQuery>("companyQueries").Resolve(context => new { });
-        Field<SubscriptionPlanQuery>("subscriptionPlanQueries").Resolve(context => new { });
-
+        public AppQuery()
+        {
+            Field<UserQuery>("userQueries").Resolve(context => new { });
+            Field<CompanyQuery>("companyQueries").Resolve(context => new { });
+            Field<SubscriptionPlanQuery>("subscriptionPlanQueries").Resolve(context => new { });
+            Field<ProjectQuery>("projectQueries").Resolve(context => new { });
+        }
     }
 }

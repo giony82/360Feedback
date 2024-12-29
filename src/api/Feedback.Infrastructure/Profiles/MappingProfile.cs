@@ -13,6 +13,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Teams, opt => opt.MapFrom(src => src.Teams));
         CreateMap<Team, TeamDto>().ReverseMap();
         CreateMap<Project, ProjectDto>().ReverseMap();
+        CreateMap<Company, IdName>().ReverseMap();
         CreateMap<Company, CompanyDto>().ReverseMap();
         CreateMap<SubscriptionPlan, SubscriptionPlanDto>().ReverseMap();
     }

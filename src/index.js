@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { onError } from '@apollo/link-error';
 import { setContext } from '@apollo/client/link/context';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -21,22 +22,26 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (networkError && 'statusCode' in networkError && networkError.statusCode === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+  }
 });
 
+const client = new ApolloClient({
+  link: errorLink.concat(authLink.concat(httpLink)),
+  cache: new InMemoryCache(),
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-     <ApolloProvider client={client}>
-        <App />
+    <ApolloProvider client={client}>
+      <App />
     </ApolloProvider>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

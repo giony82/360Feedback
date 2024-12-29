@@ -13,32 +13,30 @@ import {
     CircularProgress,
     TableSortLabel,
 } from '@mui/material';
-import CompanyService from '../../services/companyService';
-import { Company } from '../../types';
-import AddCompanyForm from './AddCompanyForm';
-import styles from './Companies.module.css';
+import ProjectService from '../../services/projectService';
+import { Project } from '../../types';
+import styles from './Projects.module.css';
+import AddProjectForm from './AddProjectForm';
 import { useSortableData } from '../../hooks/useSortableData';
 
-
 const headerCells = [
-    { id: 'name', label: 'Company Name' },
-    { id: 'projects', label: 'Projects' },
+    { id: 'name', label: 'Project Name' },
+    { id: 'company', label: 'Company' },
     { id: 'teams', label: 'Teams' },
 ];
 
-const Companies: React.FC = () => {
-    const [companies, setCompanies] = useState<Company[]>([]);
+const Projects: React.FC = () => {
+    const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     
-    const { items: sortedCompanies, sortConfig, requestSort } = useSortableData(companies, 'name');
+    const { items: sortedProjects, sortConfig, requestSort } = useSortableData(projects, 'name');
 
-    const loadCompanies = async () => {
+    const loadProjects = async () => {
         try {
             setLoading(true);
-            const data = await CompanyService.fetchCompanies();
-            console.log("Fetched companies:", data);
-            setCompanies(data);
+            const data = await ProjectService.fetchProjects();            
+            setProjects(data);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred');
         } finally {
@@ -47,23 +45,18 @@ const Companies: React.FC = () => {
     };
 
     useEffect(() => {
-        loadCompanies();
+        loadProjects();
     }, []);
 
-    const handleCompanyAdded = () => {
-        console.log("Adding company, refreshing list...");
-        loadCompanies();
-    };
-
-    if (error) return <p>Error fetching companies: {error}</p>;
+    if (error) return <p>Error fetching projects: {error}</p>;
 
     return (
         <Box sx={{ p: 4 }}>
             <Typography variant="h4" component="h1" sx={{ mb: 4 }}>
-                Manage Companies
+                Projects
             </Typography>
 
-            <AddCompanyForm onCompanyAdded={handleCompanyAdded}/>
+            <AddProjectForm onProjectAdded={loadProjects}/>
 
             <TableContainer component={Paper}>
                 <Table>
@@ -74,7 +67,7 @@ const Companies: React.FC = () => {
                                     <TableSortLabel
                                         active={sortConfig.key === headerCell.id}
                                         direction={sortConfig.key === headerCell.id ? sortConfig.direction : 'asc'}
-                                        onClick={() => requestSort(headerCell.id as keyof Company)}
+                                        onClick={() => requestSort(headerCell.id as keyof Project)}
                                     >
                                         <strong>{headerCell.label}</strong>
                                     </TableSortLabel>
@@ -84,18 +77,18 @@ const Companies: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {!loading && sortedCompanies.length === 0 ? (
+                        {!loading && sortedProjects.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={4} align="center">
-                                    You don't have any companies yet.
+                                    No projects found.
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            sortedCompanies.map((company, index) => (
-                                <TableRow key={company.id} className={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
-                                    <TableCell>{company.name}</TableCell>
-                                    <TableCell>{company.projects}</TableCell>
-                                    <TableCell>{company.teams}</TableCell>
+                            sortedProjects.map((project, index) => (
+                                <TableRow key={project.id} className={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
+                                    <TableCell>{project.name}</TableCell>
+                                    <TableCell>{project.company?.name}</TableCell>
+                                    <TableCell>{project.teams?.length || 0}</TableCell>
                                     <TableCell>
                                         <Button variant="text" color="primary">Edit</Button>
                                     </TableCell>
@@ -116,4 +109,4 @@ const Companies: React.FC = () => {
     );
 };
 
-export default Companies;
+export default Projects;
