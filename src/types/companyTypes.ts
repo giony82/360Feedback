@@ -1,13 +1,11 @@
 
-// Define types for the company data
 export interface Company {
     id: number;
     name: string;
-    projects: number; // Assuming projects is a number, adjust if necessary
-    teams: number; // Assuming teams is a number, adjust if necessary
+    projects: number;
+    teams: number; 
 }
 
-// Define the Plan interface
 export interface Plan {
     id: number;
     name: string;

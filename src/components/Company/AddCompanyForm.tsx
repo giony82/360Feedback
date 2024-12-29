@@ -88,8 +88,4 @@ const AddCompanyForm: React.FC<AddCompanyFormProps> = ({ onCompanyAdded }) => {
     );
 };
 
-AddCompanyForm.propTypes = {
-    onCompanyAdded: PropTypes.func.isRequired,
-};
-
 export default React.memo(AddCompanyForm);

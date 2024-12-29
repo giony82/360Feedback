@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { 
     TextField, 
     Button, 
@@ -8,12 +9,11 @@ import {
     InputLabel, 
     FormControl, 
     CircularProgress,
-    Grid 
+    Grid2 as Grid
 } from '@mui/material';
 import { useMutation } from '@apollo/client';
-import PropTypes from 'prop-types';
 import { ADD_PROJECT } from '../../queries/mutations/projectMutations';
-import { Company } from '../../types';
+import { Company, NewProject } from '../../types';
 import CompanyService from '../../services/companyService';
 import { useError } from '../../context/ErrorContext';
 
@@ -21,77 +21,72 @@ interface AddProjectFormProps {
     onProjectAdded: () => void;
 }
 
+const INITIAL_PROJECT_STATE: NewProject = {
+    name: '',
+    description: '',
+    companyId: null
+} as const;
+
 const AddProjectForm: React.FC<AddProjectFormProps> = ({ onProjectAdded }) => {
     const { setError } = useError();
-    const [newProjectName, setNewProjectName] = useState('');
-    const [description, setDescription] = useState('');
-    const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
+    const [project, setProject] = useState<NewProject>(INITIAL_PROJECT_STATE);
     const [companies, setCompanies] = useState<Company[]>([]);
     const [addProject] = useMutation(ADD_PROJECT);
     const [loading, setLoading] = useState(false);
     
+    const { handleSubmit, reset } = useForm<NewProject>({
+        defaultValues: INITIAL_PROJECT_STATE
+    });
+
     useEffect(() => {
         const loadCompanies = async () => {
             try {
                 const fetchedCompanies = await CompanyService.fetchCompanies();
                 setCompanies(fetchedCompanies);
                 if (fetchedCompanies.length > 0) {
-                    setSelectedCompanyId(fetchedCompanies[0].id);
+                    setProject(p => ({ ...p, companyId: fetchedCompanies[0].id }));
                 }
             } catch (error) {                
-                setError('Failed to load companies: ' + error);
+                setError(`Failed to load companies: ${error}`);
             }
         };
 
         loadCompanies();
     }, [setError]);
 
-    const handleAddProject = async () => {
-        if (newProjectName.trim() && selectedCompanyId !== null) {
-            setLoading(true);
-            try {
-                await addProject({ 
-                    variables: { 
-                        project: { 
-                            name: newProjectName, 
-                            description: description.trim(),
-                            companyId: selectedCompanyId 
-                        } 
-                    } 
-                });
-                // Reset form
-                setNewProjectName('');
-                setDescription('');
-                setSelectedCompanyId(companies[0]?.id || null);
-                onProjectAdded();
-            } catch (error) {                
-                setError('Failed to add project.');
-            } finally {
-                setLoading(false);
-            }
+    const onSubmit = handleSubmit(async (data: NewProject) => {
+        setLoading(true);
+        try {
+            await addProject({ variables: { project: data } });
+            reset({ ...INITIAL_PROJECT_STATE, companyId: companies[0]?.id ?? null });
+            onProjectAdded();
+        } catch (error) {
+            setError('Failed to add project.');
+        } finally {
+            setLoading(false);
         }
-    };
+    });
 
     return (
         <Box sx={{ mb: 4 }}>
             <Grid container spacing={2} alignItems="flex-start">
-                <Grid item xs={12} md={4}>
+                <Grid gridColumn={{ xs: 12, md: 4 }}>
                     <TextField
                         fullWidth
                         variant="outlined"
-                        value={newProjectName}
-                        onChange={(e) => setNewProjectName(e.target.value)}
+                        value={project.name}
+                        onChange={(e) => setProject(p => ({ ...p, name: e.target.value }))}
                         placeholder="Enter project name"
                         label="Project Name"
                     />
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid gridColumn={{ xs: 12, md: 4 }}>
                     <FormControl fullWidth variant="outlined">
                         <InputLabel id="company-select-label">Company</InputLabel>
                         <Select
                             labelId="company-select-label"
-                            value={selectedCompanyId || ''}
-                            onChange={(e) => setSelectedCompanyId(Number(e.target.value))}
+                            value={project.companyId || ''}
+                            onChange={(e) => setProject(p => ({ ...p, companyId: Number(e.target.value) }))}
                             label="Company"
                         >
                             {companies.map((company: Company) => (
@@ -102,27 +97,27 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onProjectAdded }) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid gridColumn="xs-12">
                     <TextField
                         fullWidth
                         variant="outlined"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={project.description}
+                        onChange={(e) => setProject(p => ({ ...p, description: e.target.value }))}
                         placeholder="Enter project description"
                         label="Description"
                         multiline
                         rows={3}
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid gridColumn="xs-12">
                     {loading ? (
                         <CircularProgress size={24} />
                     ) : (
                         <Button 
                             variant="contained" 
                             color="primary" 
-                            onClick={handleAddProject}
-                            disabled={!newProjectName.trim() || selectedCompanyId === null}
+                            onClick={onSubmit}
+                            disabled={!project.name.trim() || project.companyId === null}
                         >
                             Add Project
                         </Button>
@@ -131,10 +126,6 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onProjectAdded }) => {
             </Grid>
         </Box>
     );
-};
-
-AddProjectForm.propTypes = {
-    onProjectAdded: PropTypes.func.isRequired,
 };
 
 export default React.memo(AddProjectForm); 
