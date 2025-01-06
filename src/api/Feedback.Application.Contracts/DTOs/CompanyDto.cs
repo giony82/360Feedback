@@ -2,13 +2,10 @@
 
 namespace Feedback.Application.Contracts.DTOs;
 
-public class CompanyDto
+public class CompanyDto: IdName
 {
-    public int Id { get; set; }
-
-    public DateTime CreatedDate { get; set; }
-    public string Name { get; set; }
-
+    public DateTime CreatedAt { get; set; }
+    
     public ICollection<ProjectDto> Projects { get; set; }
 
     public ICollection<TeamDto> Teams

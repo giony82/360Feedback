@@ -1,6 +1,6 @@
 ﻿namespace Feedback.Core.Entities;
 
-public class Project
+public class Project: Entity
 {
     public int Id { get; set; }
 

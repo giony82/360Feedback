@@ -1,6 +1,6 @@
 using Feedback.Core.Entities;
 
-public class User
+public class User : Entity
 {
     public int Id { get; set; }
 
@@ -10,13 +10,11 @@ public class User
 
     public string Picture { get; set; }
 
-    public ICollection<Team> Teams { get; set; }=new List<Team>();
+    public ICollection<Team> Teams { get; set; } = new List<Team>();
 
     public ICollection<UserRole> UserRoles { get; set; }
 
-    public DateTime JoinedDate { get; set; }
+    public bool IsVerified { get; set; }
 
-    public bool IsVerified {get;set;}
-
-    public int CompanyId {get;set;}
+    public int CompanyId { get; set; }
 }

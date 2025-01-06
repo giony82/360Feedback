@@ -1,7 +1,4 @@
-using Feedback.Application.Contracts;
 using Feedback.Application.Contracts.Interfaces;
-using System.Net.Http;
-using System.Web;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 

@@ -68,9 +68,9 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onProjectAdded }) => {
     });
 
     return (
-        <Box sx={{ mb: 4 }}>
-            <Grid container spacing={2} alignItems="flex-start">
-                <Grid gridColumn={{ xs: 12, md: 4 }}>
+        <Box component="form" onSubmit={onSubmit} sx={{ flexGrow: 1, maxWidth: "600px", mb:2}} >
+            <Grid container spacing={2}>                
+            <Grid size={{ xs: 12, md: 6 }}>   
                     <TextField
                         fullWidth
                         variant="outlined"
@@ -80,7 +80,7 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onProjectAdded }) => {
                         label="Project Name"
                     />
                 </Grid>
-                <Grid gridColumn={{ xs: 12, md: 4 }}>
+                <Grid size={{ xs: 12, md: 6 }}>   
                     <FormControl fullWidth variant="outlined">
                         <InputLabel id="company-select-label">Company</InputLabel>
                         <Select
@@ -97,7 +97,7 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onProjectAdded }) => {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid gridColumn="xs-12">
+                <Grid size={{ xs: 12 }}>   
                     <TextField
                         fullWidth
                         variant="outlined"
@@ -109,7 +109,7 @@ const AddProjectForm: React.FC<AddProjectFormProps> = ({ onProjectAdded }) => {
                         rows={3}
                     />
                 </Grid>
-                <Grid gridColumn="xs-12">
+                <Grid size={{ xs: 4, md: 4 }}>       
                     {loading ? (
                         <CircularProgress size={24} />
                     ) : (

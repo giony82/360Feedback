@@ -13,6 +13,7 @@ namespace Feedback.Application
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
 
             /*Does not work: services.Scan(selector => selector

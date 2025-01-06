@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<ISubscriptionPlanRepository, SubscriptionPlanRepository>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<ITeamRepository, TeamRepository>();
 
         return services;
     }

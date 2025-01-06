@@ -1,14 +1,22 @@
 ﻿using Feedback.Application.Contracts.DTOs.Feedback.Application.DTOs;
 using GraphQL.Types;
 
-namespace Feedback.GraphQL.Types {
-    public class TeamType : ObjectGraphType<TeamDto>
+namespace Feedback.GraphQL.Types;
+
+public class TeamType : ObjectGraphType<TeamDto>
+{
+    public TeamType()
     {
-        public TeamType()
-        {
-            Field(x => x.Id).Description("The ID of the team.");
-            Field(x => x.Name).Description("The name of the team.");
-            Field(x => x.Description, nullable: true).Description("The description of the team.");
-        }
+        Field(t => t.Id);
+        Field(t => t.Name);
+        Field(t => t.Description);
+        Field(t => t.CreatedAt);
+        Field(t => t.UpdatedAt);
+        Field(t => t.ProjectId);
+        Field(m => m.Project, type: typeof(IdNameType))
+            .Description("The project to which the team belongs");
+        Field(m => m.Users, type: typeof(ListGraphType<UserType>))
+            .Resolve(c => c.Source.Users)
+            .Description("All teams");
     }
 }

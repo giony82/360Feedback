@@ -18,6 +18,7 @@ import { Company } from '../../types';
 import AddCompanyForm from './AddCompanyForm';
 import styles from './Companies.module.css';
 import { useSortableData } from '../../hooks/useSortableData';
+import { useError } from '../../context/ErrorContext';
 
 
 const headerCells = [
@@ -27,9 +28,9 @@ const headerCells = [
 ];
 
 const Companies: React.FC = () => {
+    const { setError } = useError();
     const [companies, setCompanies] = useState<Company[]>([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     
     const { items: sortedCompanies, sortConfig, requestSort } = useSortableData(companies, 'name');
 
@@ -37,7 +38,6 @@ const Companies: React.FC = () => {
         try {
             setLoading(true);
             const data = await CompanyService.fetchCompanies();
-            console.log("Fetched companies:", data);
             setCompanies(data);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred');
@@ -50,12 +50,9 @@ const Companies: React.FC = () => {
         loadCompanies();
     }, []);
 
-    const handleCompanyAdded = () => {
-        console.log("Adding company, refreshing list...");
+    const handleCompanyAdded = () => {        
         loadCompanies();
     };
-
-    if (error) return <p>Error fetching companies: {error}</p>;
 
     return (
         <Box sx={{ p: 4 }}>

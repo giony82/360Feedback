@@ -13,31 +13,31 @@ import {
     CircularProgress,
     TableSortLabel,
 } from '@mui/material';
-import ProjectService from '../../services/projectService';
-import { Project } from '../../types';
-import styles from './Projects.module.css';
-import AddProjectForm from './AddProjectForm';
+import TeamService from '../../services/teamService';
+import { Team } from '../../types';
+import styles from './Teams.module.css';
+import AddTeamForm from './AddTeamForm';
 import { useSortableData } from '../../hooks/useSortableData';
 import { useError } from '../../context/ErrorContext';
 
 const headerCells = [
-    { id: 'name', label: 'Project Name' },
-    { id: 'company', label: 'Company' },
-    { id: 'teams', label: 'Teams' },
+    { id: 'name', label: 'Team Name' },
+    { id: 'project', label: 'Project' },
+    { id: 'description', label: 'Description' },
 ];
 
-const Projects: React.FC = () => {
+const Teams: React.FC = () => {
     const { setError } = useError();
-    const [projects, setProjects] = useState<Project[]>([]);
+    const [teams, setTeams] = useState<Team[]>([]);
     const [loading, setLoading] = useState(false);
     
-    const { items: sortedProjects, sortConfig, requestSort } = useSortableData(projects, 'name');
+    const { items: sortedTeams, sortConfig, requestSort } = useSortableData(teams, 'name');
 
-    const loadProjects = async () => {
+    const loadTeams = async () => {
         try {
             setLoading(true);
-            const data = await ProjectService.fetchProjects();            
-            setProjects(data);
+            const data = await TeamService.fetchTeams();            
+            setTeams(data);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred');
         } finally {
@@ -46,16 +46,16 @@ const Projects: React.FC = () => {
     };
 
     useEffect(() => {
-        loadProjects();
-    }, []);
+        loadTeams();
+    }, [setError]);
 
     return (
         <Box sx={{ p: 4 }}>
             <Typography variant="h4" component="h1" sx={{ mb: 4 }}>
-                Projects
+                Teams
             </Typography>
 
-            <AddProjectForm onProjectAdded={loadProjects}/>
+            <AddTeamForm onTeamAdded={loadTeams}/>
 
             <TableContainer component={Paper}>
                 <Table>
@@ -66,7 +66,7 @@ const Projects: React.FC = () => {
                                     <TableSortLabel
                                         active={sortConfig.key === headerCell.id}
                                         direction={sortConfig.key === headerCell.id ? sortConfig.direction : 'asc'}
-                                        onClick={() => requestSort(headerCell.id as keyof Project)}
+                                        onClick={() => requestSort(headerCell.id as keyof Team)}
                                     >
                                         <strong>{headerCell.label}</strong>
                                     </TableSortLabel>
@@ -76,18 +76,17 @@ const Projects: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {!loading && sortedProjects.length === 0 ? (
+                        {!loading && sortedTeams.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={4} align="center">
-                                    No projects found.
+                                    No teams found.
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            sortedProjects.map((project, index) => (
-                                <TableRow key={project.id} className={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
-                                    <TableCell>{project.name}</TableCell>
-                                    <TableCell>{project.company?.name}</TableCell>
-                                    <TableCell>{project.teams?.length || 0}</TableCell>
+                            sortedTeams.map((team, index) => (
+                                <TableRow key={team.id} className={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
+                                    <TableCell>{team.name}</TableCell>
+                                    <TableCell>{team.project?.name}</TableCell>                                    
                                     <TableCell>
                                         <Button variant="text" color="primary">Edit</Button>
                                     </TableCell>
@@ -108,4 +107,4 @@ const Projects: React.FC = () => {
     );
 };
 
-export default Projects;
+export default Teams;

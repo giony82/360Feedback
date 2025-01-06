@@ -1,13 +1,12 @@
 ﻿namespace Feedback.Core.Entities;
 
-public class Company
+public class Company:Entity
 {
     public int Id
     {
         get; set;
     }
 
-    public DateTime CreatedDate {get;set;}
     public string Name
     {
         get; set;

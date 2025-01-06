@@ -10,6 +10,7 @@ namespace Feedback.GraphQL.Queries
             Field<CompanyQuery>("companyQueries").Resolve(context => new { });
             Field<SubscriptionPlanQuery>("subscriptionPlanQueries").Resolve(context => new { });
             Field<ProjectQuery>("projectQueries").Resolve(context => new { });
+            Field<TeamQuery>("teamQueries").Resolve(context => new { });
         }
     }
 }

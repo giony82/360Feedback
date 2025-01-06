@@ -8,11 +8,14 @@ import Home from './pages/Home';
 import NavMenu from './components/AppBar/NavMenu';
 import Profile from './components/Profile';
 import { LinkedInCallback } from 'react-linkedin-login-oauth2';
-import Footer from './components/Layout/Footer'; 
-import Companies from './components/Company/Companies'; 
+
 import { ErrorProvider } from './context/ErrorContext';
+import Footer from './components/Layout/Footer'; 
+
+import Companies from './components/Company/Companies'; 
 import ErrorBanner from './components/ErrorBanner';
 import Projects from './components/Project/Projects';
+import Teams from './components/Team/Teams';
 
 const theme = createTheme();
 
@@ -62,6 +65,7 @@ function AppContent() {
         } />
         <Route path="/linkedin" element={<LinkedInCallback />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/teams" element={<Teams />} />
       </Routes>
       <Footer />       
     </div>

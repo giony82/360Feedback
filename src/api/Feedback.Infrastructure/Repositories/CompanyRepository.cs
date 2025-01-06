@@ -12,9 +12,8 @@ public class CompanyRepository(AppDbContext appDbContext) : ICompanyRepository
         return await appDbContext.Companies.ToListAsync();
     }
 
-    public async Task<Company> GetCompanyByIdAsync(int id)
+    public async Task<Company?> GetCompanyByIdAsync(int id)
     {
-        // Implement data access logic here
         return await appDbContext.Companies.FindAsync(id);
     }
 

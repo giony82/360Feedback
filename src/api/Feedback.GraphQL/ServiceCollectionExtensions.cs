@@ -1,7 +1,4 @@
-﻿using Feedback.GraphQL.Mutations;
-using Feedback.GraphQL.Queries;
-using Feedback.GraphQL.Types;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 namespace Feedback.GraphQL;
